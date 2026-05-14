@@ -8,14 +8,6 @@ android {
     namespace "com.example.easy_loan"
     compileSdk 34
 
-    defaultConfig {
-        applicationId "com.example.easy_loan"
-        minSdk 21
-        targetSdk 34
-        versionCode 1
-        versionName "1.0"
-    }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
@@ -24,6 +16,18 @@ android {
     kotlinOptions {
         jvmTarget = '17'
     }
-}
 
-dependencies {}
+    defaultConfig {
+        applicationId "com.example.easy_loan"
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.debug
+        }
+    }
+}
