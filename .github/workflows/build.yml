@@ -1,0 +1,49 @@
+name: EasyLoan Build APK
+
+on:
+  push:
+    branches:
+      - main  # Jab aap main branch pe push karenge tab build shuru hoga
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build Flutter APK
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Repository se code checkout karna
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 2. Java setup karna (Android build ke liye zaroori hai)
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      # 3. Flutter environment setup karna (Flutter 3.22.0 specify kiya hai)
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.22.0'
+          channel: 'stable'
+
+      # 4. Dependencies get karna
+      - name: Get Dependencies
+        run: flutter pub get
+
+      # 5. Optimized Release APK build karna
+      # --split-per-abi se size aur kam ho jata hai (Itel S23 ke liye best hai)
+      - name: Build Release APK
+        run: flutter build apk --release --split-per-abi
+
+      # 6. Build file ko GitHub par upload karna taaki aap download kar sakein
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: EasyLoan-Release-APK
+          path: build/app/outputs/flutter-apk/app-release.apk
