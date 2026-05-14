@@ -1,0 +1,47 @@
+name: Build EasyLoan APK
+
+on:
+  push:
+    branches:
+      - main  # Jab aap main branch pe code push karenge tab build chalega
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Code ko checkout karna
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Java setup karna (Android build ke liye zaroori hai)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # 3. Flutter setup karna
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.0' # Stable version
+          channel: 'stable'
+
+      # 4. Dependencies download karna
+      - name: Install dependencies
+        run: flutter pub get
+
+      # 5. APK Build karna (Debug version for testing on iTel S23)
+      - name: Build APK
+        run: flutter build apk --debug
+
+      # 6. Build file ko upload karna taaki aap download kar sakein
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: easy-loan-debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
