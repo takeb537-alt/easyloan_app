@@ -2,46 +2,41 @@ name: Build EasyLoan APK
 
 on:
   push:
-    branches:
-      - main  # Jab aap main branch pe code push karenge tab build chalega
+    branches: [ "main" ]
   pull_request:
-    branches:
-      - main
+    branches: [ "main" ]
+  workflow_dispatch: # Allows you to run it manually
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # This fixes most "Set up job" errors
 
     steps:
-      # 1. Code ko checkout karna
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # 2. Java setup karna (Android build ke liye zaroori hai)
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      # 3. Flutter setup karna
-      - name: Set up Flutter
+      - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.0' # Stable version
           channel: 'stable'
+          cache: true # Faster builds for your next runs
 
-      # 4. Dependencies download karna
       - name: Install dependencies
         run: flutter pub get
 
-      # 5. APK Build karna (Debug version for testing on iTel S23)
-      - name: Build APK
-        run: flutter build apk --debug
+      - name: Build Debug APK
+        run: flutter build apk --debug --target-platform android-arm64
 
-      # 6. Build file ko upload karna taaki aap download kar sakein
       - name: Upload APK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: easy-loan-debug-apk
+          name: EasyLoan-Debug-APK
           path: build/app/outputs/flutter-apk/app-debug.apk
