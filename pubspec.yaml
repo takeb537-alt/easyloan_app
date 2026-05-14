@@ -1,17 +1,25 @@
 name: easy_loan
-description: A new Flutter project.
+description: "A production-ready loan app optimized for Itel S23"
+publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.22.0 <4.0.0'
+  # FIX: Using 3.0.0 as lower bound prevents the 'version solving' error on GitHub
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.6
-  # Design ke liye icons aur images ke liye niche ke packages use kar sakte hain
-  # font_awesome_flutter: ^10.7.0 
-  # flutter_svg: ^2.0.10+1
+  shared_preferences: ^2.2.3
+  provider: ^6.1.2
+  intl: ^0.19.0
+  flutter_localizations:
+    sdk: flutter
+  permission_handler: ^11.3.1
+  path_provider: ^2.1.3
+  # For Itel S23 device binding
+  flutter_device_id: ^0.3.0 
 
 dev_dependencies:
   flutter_test:
@@ -20,21 +28,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
-  # Jab aap images aur fonts add karein toh inhein uncomment karein
+  # Add your assets here if you have images
   # assets:
-  #   - assets/images/user_avatar.png
-  #   - assets/images/logo.png
-  #   - assets/images/coins_icon.png
-  #   - assets/images/cash_hand_icon.png
-  #   - assets/icons/medical.svg
-  #   - assets/icons/education.svg
-  #   - assets/icons/travel.svg
-  #   - assets/icons/business.svg
-
-  # fonts:
-  #   - family: SFPro
-  #     fonts:
-  #       - asset: assets/fonts/SFProDisplay-Regular.ttf
-  #       - asset: assets/fonts/SFProDisplay-Bold.ttf
-  #         weight: 700
+  #   - assets/images/
