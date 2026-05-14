@@ -2,23 +2,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const EasyLoanApp());
+  runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: SplashScreen(),
+  ));
 }
 
-class EasyLoanApp extends StatelessWidget {
-  const EasyLoanApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Easy Loan',
-      home: const SplashScreen(),
-    );
-  }
-}
-
-// --- Splash Screen Code ---
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -30,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // 3 second baad HomeScreen par bhejne ka logic
+    // 3 second ka timer: iske baad app agali screen par jayega
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
@@ -47,10 +36,10 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Image 1000026368.png ko center mein dikhana
+            // Aapki upload ki gayi image
             Image.asset(
-              'assets/1000026368.png',
-              width: 250, 
+              '1778294859279_1.png',
+              width: 280, // Aap size yahan se kam ya zyada kar sakte hain
             ),
           ],
         ),
@@ -59,16 +48,22 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 }
 
-// --- Next Screen (Home) ---
+// Ye wo screen hai jo Splash ke baad dikhegi
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Easy Loan Home")),
+      appBar: AppBar(
+        title: const Text("EasyLoan"),
+        backgroundColor: Colors.blueGrey,
+      ),
       body: const Center(
-        child: Text("Welcome to Easy Loan App!"),
+        child: Text(
+          "Welcome to EasyLoan App!",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }
