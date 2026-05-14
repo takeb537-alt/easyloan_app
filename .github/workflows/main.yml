@@ -14,11 +14,13 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.13.0'
           channel: 'stable'
 
-      - name: Get Dependencies
-        run: flutter pub get
+      - name: Create Android Structure
+        run: |
+          # Ye line missing folders banayegi
+          flutter create . --overwrite --platforms=android
+          flutter pub get
 
       - name: Build APK
         run: flutter build apk --debug
