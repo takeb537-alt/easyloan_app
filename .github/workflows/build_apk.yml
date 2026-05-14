@@ -8,9 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -27,7 +24,7 @@ jobs:
           flutter-version: '3.19.0'
           channel: 'stable'
 
-      - name: Fresh Build
+      - name: Build APK
         run: |
           flutter clean
           flutter pub get
