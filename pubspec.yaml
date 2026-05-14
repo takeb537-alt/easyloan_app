@@ -1,0 +1,35 @@
+name: easyloan
+description: EasyLoan - Your Categories, Your Amount.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^6.1.2
+  google_fonts: ^6.2.1
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+
+  # To use Google Fonts (Nunito), no assets needed if using google_fonts package
+  # But if you want local fonts, add them here:
+  # fonts:
+  #   - family: Nunito
+  #     fonts:
+  #       - asset: assets/fonts/Nunito-Regular.ttf
+  #       - asset: assets/fonts/Nunito-Bold.ttf
+  #         weight: 700
+  #       - asset: assets/fonts/Nunito-ExtraBold.ttf
+  #         weight: 800
+  #       - asset: assets/fonts/Nunito-Black.ttf
+  #         weight: 900
