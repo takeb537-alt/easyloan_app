@@ -3,15 +3,13 @@ name: Build EasyLoan APK
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-  workflow_dispatch: # Allows you to run it manually
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # This fixes most "Set up job" errors
+      contents: write
 
     steps:
       - name: Checkout code
@@ -26,8 +24,8 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
+          flutter-version: '3.19.0' # Fixed stable version
           channel: 'stable'
-          cache: true # Faster builds for your next runs
 
       - name: Install dependencies
         run: flutter pub get
@@ -38,5 +36,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: EasyLoan-Debug-APK
+          name: EasyLoan-App
           path: build/app/outputs/flutter-apk/app-debug.apk
