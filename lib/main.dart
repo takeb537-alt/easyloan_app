@@ -4,28 +4,48 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: SplashScreen(),
+    home: StylishSplashScreen(),
   ));
 }
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+class StylishSplashScreen extends StatefulWidget {
+  const StylishSplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  State<StylishSplashScreen> createState() => _StylishSplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _StylishSplashScreenState extends State<StylishSplashScreen> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
   @override
   void initState() {
     super.initState();
-    // 3 second baad Home Screen par bhej dega
-    Timer(const Duration(seconds: 3), () {
+    _controller = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    );
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
+    
+    _controller.forward(); // Animation shuru
+
+    Timer(const Duration(seconds: 4), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        PageRouteBuilder(
+          pageBuilder: (context, anim, res) => const HomeScreen(),
+          transitionsBuilder: (context, anim, res, child) => FadeTransition(opacity: anim, child: child),
+          transitionDuration: const Duration(milliseconds: 800),
+        ),
       );
     });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -33,15 +53,12 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Aapki photo ka sahi naam
-            Image.asset(
-              '1778294859279_1.png', 
-              width: 280,
-            ),
-          ],
+        child: ScaleTransition(
+          scale: _animation,
+          child: FadeTransition(
+            opacity: _animation,
+            child: Image.asset('1778294859279_1.png', width: 250),
+          ),
         ),
       ),
     );
@@ -54,16 +71,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("EasyLoan"),
-        backgroundColor: Colors.blueGrey,
-      ),
-      body: const Center(
-        child: Text(
-          "Welcome to EasyLoan!",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-      ),
+      appBar: AppBar(title: const Text("EasyLoan"), backgroundColor: Colors.blueGrey),
+      body: const Center(child: Text("App Ready!", style: TextStyle(fontSize: 22))),
     );
   }
 }
