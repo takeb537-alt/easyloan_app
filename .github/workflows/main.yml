@@ -16,10 +16,12 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Create Android Structure
+      - name: Create Project and Icon
         run: |
-          # Ye line missing folders banayegi
           flutter create . --overwrite --platforms=android
+          # Icon badalne ke liye hum image ko launcher icon folder mein copy karenge
+          mkdir -p android/app/src/main/res/mipmap-hdpi
+          cp 1778294859279_1.png android/app/src/main/res/mipmap-hdpi/ic_launcher.png
           flutter pub get
 
       - name: Build APK
