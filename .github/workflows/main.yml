@@ -16,13 +16,16 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Create Project and Icon
+      - name: Fix Assets and Icons
         run: |
           flutter create . --overwrite --platforms=android
-          # Icons Setup
+          # Agar aapki image ka naam 1000026368.png hai, toh hum use fix karenge
+          cp 1000026368.png 1778294859279_1.png || true
+          
+          # Sabhi sizes ke liye icon copy karna
           for size in mdpi hdpi xhdpi xxhdpi xxxhdpi; do
             mkdir -p android/app/src/main/res/mipmap-$size
-            cp 1778294859279_1.png android/app/src/main/res/mipmap-$size/ic_launcher.png
+            cp 1778294859279_1.png android/app/src/main/res/mipmap-$size/ic_launcher.png || cp 1000026368.png android/app/src/main/res/mipmap-$size/ic_launcher.png
           done
           flutter pub get
 
